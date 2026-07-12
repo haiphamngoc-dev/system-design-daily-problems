@@ -29,7 +29,7 @@ jobs:
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v2
         with:
-          mdbook-version: "0.4.40" # Change to 'latest' to always use the newest version
+          mdbook-version: "0.5.4" # Matches the local version to avoid compatibility errors with mdbook-mermaid
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
