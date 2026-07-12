@@ -11,3 +11,4 @@ Mọi thay đổi lớn đối với dự án này sẽ được ghi nhận tạ
 ### Changed
 
 - Tái cấu trúc Bài toán 02: Tiêu diệt vấn đề truy vấn N+1 theo chuẩn 6 phần, bổ sung sơ đồ Mermaid và ví dụ mã nguồn (Prisma, Hibernate).
+- Tối ưu hóa độ tương phản của các sơ đồ Mermaid bằng cách loại bỏ các khối màu nền (rect background).

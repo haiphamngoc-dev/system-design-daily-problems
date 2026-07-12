@@ -38,14 +38,12 @@ sequenceDiagram
     participant App as Application Server
     participant DB as Database
 
-    rect rgb(240, 220, 220)
-        note right of App: Vấn đề N+1 Query (Lazy Loading)
-        App->>DB: SELECT * FROM orders LIMIT 50
-        DB-->>App: Trả về 50 orders
-        loop 50 lần (mỗi order)
-            App->>DB: SELECT * FROM customers WHERE id = customer_id
-            DB-->>App: Trả về thông tin customer tương ứng
-        end
+    note right of App: Vấn đề N+1 Query (Lazy Loading)
+    App->>DB: SELECT * FROM orders LIMIT 50
+    DB-->>App: Trả về 50 orders
+    loop 50 lần (mỗi order)
+        App->>DB: SELECT * FROM customers WHERE id = customer_id
+        DB-->>App: Trả về thông tin customer tương ứng
     end
 ```
 
@@ -67,11 +65,9 @@ sequenceDiagram
     participant App as Application Server
     participant DB as Database
 
-    rect rgb(220, 240, 220)
-        note right of App: Giải pháp Eager Loading (JOIN)
-        App->>DB: SELECT * FROM orders LEFT JOIN customers ON orders.customer_id = customers.id LIMIT 50
-        DB-->>App: Trả về 50 orders kèm thông tin customer trong 1 truy vấn duy nhất
-    end
+    note right of App: Giải pháp Eager Loading (JOIN)
+    App->>DB: SELECT * FROM orders LEFT JOIN customers ON orders.customer_id = customers.id LIMIT 50
+    DB-->>App: Trả về 50 orders kèm thông tin customer trong 1 truy vấn duy nhất
 ```
 
 **Luồng dữ liệu hoạt động:**
