@@ -8,6 +8,7 @@ Mọi thay đổi lớn đối với dự án này sẽ được ghi nhận tạ
 
 - Thêm Bài toán 02: Tiêu diệt vấn đề truy vấn N+1 vào mục lục `SUMMARY.md`.
 - Thêm Bài toán 03: Giới hạn tần suất yêu cầu không bị bùng nổ ở ranh giới vào mục lục `SUMMARY.md`.
+- Thêm Bài toán 04: Ngăn chặn trùng lặp giao dịch thanh toán vào mục lục `SUMMARY.md`.
 
 ### Changed
 
@@ -15,6 +16,7 @@ Mọi thay đổi lớn đối với dự án này sẽ được ghi nhận tạ
 - Tối ưu hóa độ tương phản của các sơ đồ Mermaid bằng cách loại bỏ các khối màu nền (rect background).
 - Tái cấu trúc Bài toán 03: Giới hạn tần suất yêu cầu không bị bùng nổ ở ranh giới theo chuẩn 6 phần, bổ sung phân tích thuật toán Lazy Refill và ví dụ mã nguồn (Redis Lua Script, Bucket4j).
 - Kích hoạt tính năng hỗ trợ công thức toán học MathJax trong `book.toml`.
+- Tái cấu trúc Bài toán 04: Ngăn chặn trùng lặp giao dịch thanh toán theo chuẩn 6 phần, bổ sung sơ đồ Mermaid và ví dụ mã nguồn (TypeScript Express middleware, Java Spring aspect).
 
 ### Fixed
 
