@@ -88,7 +88,7 @@ graph TD
 
 - **MessageGroupId (`order_id`):** Xác định nhóm tin nhắn. SQS FIFO sẽ tuần tự hóa toàn bộ các tin nhắn trong cùng nhóm. Các nhóm khác nhau (các `order_id` khác nhau) vẫn được phân phối song song cho các worker khác nhau để tối ưu hóa hiệu năng.
 
-* **MessageDeduplicationId:** SQS FIFO yêu cầu thuộc tính chống trùng lặp tin nhắn trong vòng 5 phút (Deduplication Window).
+- **MessageDeduplicationId:** SQS FIFO yêu cầu thuộc tính chống trùng lặp tin nhắn trong vòng 5 phút (Deduplication Window).
   - _Cách 1:_ Bật **Content-based Deduplication** trên SQS Console. AWS sẽ tự động băm SHA-256 nội dung tin nhắn (`MessageBody`) để làm mã chống trùng lặp.
   - _Cách 2:_ Tự truyền thủ công `MessageDeduplicationId` từ phía Client bằng cách băm SHA-256 từ `order_id` + `status` + `timestamp` hoặc UUID để tránh trùng lặp do network retry.
 
@@ -99,7 +99,7 @@ graph TD
   - Nếu kích hoạt tính năng **High Throughput**, giới hạn này tăng lên đến **3,000 transaction/giây** (có batching) hoặc **300 req/s** không batching ở các vùng tiêu chuẩn.
   - Lượng tải cao điểm của bạn là 2,000 đơn hàng/phút (~33 đơn hàng/giây). Mỗi đơn hàng có 3 sự kiện, tương đương tối đa ~100 req/giây. Quy mô này hoàn toàn nằm trong giới hạn chịu tải an toàn của SQS FIFO mà không cần cấu hình phức tạp.
 
-* **Xử lý Nghẽn đầu hàng (Head-of-Line Blocking) & DLQ:**
+- **Xử lý Nghẽn đầu hàng (Head-of-Line Blocking) & DLQ:**
   - _Nguy cơ:_ Nếu một tin nhắn (ví dụ `paid` của đơn hàng `#123`) bị lỗi logic và không thể xử lý, nó sẽ chặn toàn bộ các tin nhắn tiếp theo của đơn hàng `#123` (như sự kiện `cancelled` phía sau).
   - _Giải pháp:_ Cấu hình hàng đợi phụ **Dead Letter Queue (DLQ)** cho SQS FIFO. Thiết lập thuộc tính `maxReceiveCount` ở mức thấp (ví dụ: 3 lần). Nếu một tin nhắn lỗi quá 3 lần, AWS SQS sẽ tự động chuyển tin nhắn lỗi đó sang DLQ, giúp giải phóng hàng đợi và cho phép các tin nhắn sau của đơn hàng đó tiếp tục chạy.
 
@@ -212,7 +212,7 @@ Dưới đây là bảng phân tích so sánh các giải pháp xử lý thứ t
 
 - **Giải quyết tận gốc vấn đề thứ tự cục bộ:** Hệ thống chỉ yêu cầu thứ tự xử lý của các sự kiện thuộc **cùng một đơn hàng** (`created -> paid -> cancelled`). SQS FIFO với `MessageGroupId` là `order_id` đáp ứng hoàn hảo yêu cầu này: Nó ép buộc tất cả tin nhắn của đơn hàng đó đi qua 1 worker tuần tự mà không làm ảnh hưởng đến khả năng xử lý song song của các đơn hàng khác nhau trên các worker khác nhau.
 
-* **Chi phí triển khai cực thấp:** Bạn không cần phải viết thêm hàng ngàn dòng code phức tạp để tự xây dựng bộ đệm sắp xếp, không cần quản lý RAM, không lo mất dữ liệu khi crash server. AWS SQS tự động vận hành và đảm bảo mọi thứ.
+- **Chi phí triển khai cực thấp:** Bạn không cần phải viết thêm hàng ngàn dòng code phức tạp để tự xây dựng bộ đệm sắp xếp, không cần quản lý RAM, không lo mất dữ liệu khi crash server. AWS SQS tự động vận hành và đảm bảo mọi thứ.
 
 ### Phân tích chi tiết các lựa chọn không tối ưu khác
 
